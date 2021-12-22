@@ -4,40 +4,40 @@ import Crosshair from './js/crosshair.js'
 import Utils from '../stuff/utils.js'
 
 export default {
-    name: 'Crosshair',
-    props: [ 'cursor', 'colors', 'layout', 'sub' ],
-    methods: {
-        create() {
-            this.ch = new Crosshair(this)
+  name: 'Crosshair',
+  props: [ 'cursor', 'colors', 'layout', 'sub' ],
+  watch: {
+    cursor: {
+      handler: function() {
 
-            // New grid overlay-renderer descriptor.
-            // Should implement draw() (see Spline.vue)
-            this.$emit('new-grid-layer', {
-                name: 'crosshair',
-                renderer: this.ch
-            })
+        if (!this.ch) this.create()
+
+        // Explore = default mode on mobile
+        const cursor = this.$props.cursor
+        const explore = cursor.mode === 'explore'
+
+        if (!cursor.x || !cursor.y) {
+          this.ch.hide()
+          this.$emit('redraw-grid')
+          return
         }
-    },
-    watch: {
-        cursor: {
-            handler: function() {
+        this.ch.visible = !explore
+      },
+      deep: true
+    }
+  },
+  methods: {
+    create() {
+      this.ch = new Crosshair(this)
 
-                if (!this.ch) this.create()
-
-                // Explore = default mode on mobile
-                const cursor = this.$props.cursor
-                const explore = cursor.mode === 'explore'
-
-                if (!cursor.x || !cursor.y) {
-                    this.ch.hide()
-                    this.$emit('redraw-grid')
-                    return
-                }
-                this.ch.visible = !explore
-            },
-            deep: true
-        }
-    },
-    render(h) { return h() }
+      // New grid overlay-renderer descriptor.
+      // Should implement draw() (see Spline.vue)
+      this.$emit('new-grid-layer', {
+        name: 'crosshair',
+        renderer: this.ch
+      })
+    }
+  },
+  render(h) { return h() }
 }
 </script>

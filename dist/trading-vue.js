@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v1.0.2 - Thu Mar 18 2021
+ * TradingVue.JS - v1.0.2 - Thu Dec 23 2021
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2019 C451 Code's All Right;
  *     Licensed under the MIT license
@@ -429,10 +429,10 @@ var render = function() {
     {
       staticClass: "trading-vue",
       style: {
-        color: this.chart_props.colors.text,
-        font: this.font_comp,
-        width: this.width + "px",
-        height: this.height + "px"
+        color: _vm.chart_props.colors.text,
+        font: _vm.font_comp,
+        width: _vm.width + "px",
+        height: _vm.height + "px"
       },
       attrs: { id: _vm.id },
       on: { mousedown: _vm.mousedown, mouseleave: _vm.mouseleave }
@@ -680,7 +680,7 @@ var Chartvue_type_template_id_4d06a4de_render = function() {
     [
       _c("keyboard", { ref: "keyboard" }),
       _vm._v(" "),
-      _vm._l(this._layout.grids, function(grid, i) {
+      _vm._l(_vm._layout.grids, function(grid, i) {
         return _c("grid-section", {
           key: grid.id,
           ref: "sec",
@@ -830,11 +830,8 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
     return [index, val];
   },
-  round: function round(num, decimals) {
-    if (decimals === void 0) {
-      decimals = 8;
-    }
-
+  round: function round(num) {
+    var decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 8;
     return parseFloat(num.toFixed(decimals));
   },
   // Strip? No, it's ugly floats in js
@@ -1013,11 +1010,8 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
       return m;
     }
   },
-  uuid: function uuid(temp) {
-    if (temp === void 0) {
-      temp = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
-    }
-
+  uuid: function uuid() {
+    var temp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
     return temp.replace(/[xy]/g, function (c) {
       var r = Math.random() * 16 | 0,
           v = c == 'x' ? r : r & 0x3 | 0x8;
@@ -1028,11 +1022,8 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
     return this.uuid('xxxxxxxxxxxx');
   },
   // Delayed warning, f = condition lambda fn
-  warn: function warn(f, text, delay) {
-    if (delay === void 0) {
-      delay = 0;
-    }
-
+  warn: function warn(f, text) {
+    var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
     setTimeout(function () {
       if (f()) console.warn(text);
     }, delay);
@@ -1310,11 +1301,8 @@ var grid_maker_TIMESCALES = constants.TIMESCALES,
     grid_maker_DAY = constants.DAY;
 var MAX_INT = Number.MAX_SAFE_INTEGER; // master_grid - ref to the master grid
 
-function GridMaker(id, params, master_grid) {
-  if (master_grid === void 0) {
-    master_grid = null;
-  }
-
+function GridMaker(id, params) {
+  var master_grid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   var sub = params.sub,
       interval = params.interval,
       range = params.range,
@@ -2599,11 +2587,8 @@ var Grid = /*#__PURE__*/function () {
     }
   }, {
     key: "emit_cursor_coord",
-    value: function emit_cursor_coord(event, add) {
-      if (add === void 0) {
-        add = {};
-      }
-
+    value: function emit_cursor_coord(event) {
+      var add = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       this.comp.$emit('cursor-changed', Object.assign({
         grid_id: this.id,
         x: event.center.x + this.offset_x,
@@ -3116,10 +3101,8 @@ var Grid = /*#__PURE__*/function () {
         return d;
       }
     },
-    modify: function modify(ux, obj) {
-      if (obj === void 0) {
-        obj = {};
-      }
+    modify: function modify(ux) {
+      var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       for (var k in obj) {
         if (k in ux) {
@@ -3208,17 +3191,6 @@ var Crosshair = /*#__PURE__*/function () {
 /* harmony default export */ const Crosshairvue_type_script_lang_js_ = ({
   name: 'Crosshair',
   props: ['cursor', 'colors', 'layout', 'sub'],
-  methods: {
-    create: function create() {
-      this.ch = new Crosshair(this); // New grid overlay-renderer descriptor.
-      // Should implement draw() (see Spline.vue)
-
-      this.$emit('new-grid-layer', {
-        name: 'crosshair',
-        renderer: this.ch
-      });
-    }
-  },
   watch: {
     cursor: {
       handler: function handler() {
@@ -3236,6 +3208,17 @@ var Crosshair = /*#__PURE__*/function () {
         this.ch.visible = !explore;
       },
       deep: true
+    }
+  },
+  methods: {
+    create: function create() {
+      this.ch = new Crosshair(this); // New grid overlay-renderer descriptor.
+      // Should implement draw() (see Spline.vue)
+
+      this.$emit('new-grid-layer', {
+        name: 'crosshair',
+        renderer: this.ch
+      });
     }
   },
   render: function render(h) {
@@ -3895,11 +3878,8 @@ var Mouse = /*#__PURE__*/function () {
 
   createClass_createClass(Mouse, [{
     key: "on",
-    value: function on(name, handler, dir) {
-      if (dir === void 0) {
-        dir = "unshift";
-      }
-
+    value: function on(name, handler) {
+      var dir = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "unshift";
       if (!handler) return;
       this.map[name] = this.map[name] || [];
       this.map[name][dir](handler);
@@ -4097,6 +4077,31 @@ var Mouse = /*#__PURE__*/function () {
 /* harmony default export */ const Splinevue_type_script_lang_js_ = ({
   name: 'Spline',
   mixins: [overlay],
+  data: function data() {
+    return {
+      COLORS: ['#42b28a', '#5691ce', '#612ff9', '#d50b90', '#ff2316']
+    };
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    line_width: function line_width() {
+      return this.sett.lineWidth || 0.75;
+    },
+    color: function color() {
+      var n = this.$props.num % 5;
+      return this.sett.color || this.COLORS[n];
+    },
+    data_index: function data_index() {
+      return this.sett.dataIndex || 1;
+    },
+    // Don't connect separate parts if true
+    skip_nan: function skip_nan() {
+      return this.sett.skipNaN;
+    }
+  },
   methods: {
     meta_info: function meta_info() {
       return {
@@ -4174,31 +4179,6 @@ var Mouse = /*#__PURE__*/function () {
     data_colors: function data_colors() {
       return [this.color];
     }
-  },
-  // Define internal setting & constants here
-  computed: {
-    sett: function sett() {
-      return this.$props.settings;
-    },
-    line_width: function line_width() {
-      return this.sett.lineWidth || 0.75;
-    },
-    color: function color() {
-      var n = this.$props.num % 5;
-      return this.sett.color || this.COLORS[n];
-    },
-    data_index: function data_index() {
-      return this.sett.dataIndex || 1;
-    },
-    // Don't connect separate parts if true
-    skip_nan: function skip_nan() {
-      return this.sett.skipNaN;
-    }
-  },
-  data: function data() {
-    return {
-      COLORS: ['#42b28a', '#5691ce', '#612ff9', '#d50b90', '#ff2316']
-    };
   }
 });
 ;// CONCATENATED MODULE: ./src/components/overlays/Spline.vue?vue&type=script&lang=js&
@@ -4358,6 +4338,24 @@ Splines_component.options.__file = "src/components/overlays/Splines.vue"
 /* harmony default export */ const Rangevue_type_script_lang_js_ = ({
   name: 'Range',
   mixins: [overlay],
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    line_width: function line_width() {
+      return this.sett.lineWidth || 0.75;
+    },
+    color: function color() {
+      return this.sett.color || '#ec206e';
+    },
+    band_color: function band_color() {
+      return this.sett.bandColor || '#ddd';
+    },
+    back_color: function back_color() {
+      return this.sett.backColor || '#381e9c16';
+    }
+  },
   methods: {
     meta_info: function meta_info() {
       return {
@@ -4437,24 +4435,6 @@ Splines_component.options.__file = "src/components/overlays/Splines.vue"
     y_range: function y_range(hi, lo) {
       return [Math.max(hi, this.sett.upper || 70), Math.min(lo, this.sett.lower || 30)];
     }
-  },
-  // Define internal setting & constants here
-  computed: {
-    sett: function sett() {
-      return this.$props.settings;
-    },
-    line_width: function line_width() {
-      return this.sett.lineWidth || 0.75;
-    },
-    color: function color() {
-      return this.sett.color || '#ec206e';
-    },
-    band_color: function band_color() {
-      return this.sett.bandColor || '#ddd';
-    },
-    back_color: function back_color() {
-      return this.sett.backColor || '#381e9c16';
-    }
   }
 });
 ;// CONCATENATED MODULE: ./src/components/overlays/Range.vue?vue&type=script&lang=js&
@@ -4487,6 +4467,33 @@ Range_component.options.__file = "src/components/overlays/Range.vue"
 /* harmony default export */ const Tradesvue_type_script_lang_js_ = ({
   name: 'Trades',
   mixins: [overlay],
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    default_font: function default_font() {
+      return '12px ' + this.$props.font.split('px').pop();
+    },
+    buy_color: function buy_color() {
+      return this.sett.buyColor || '#63df89';
+    },
+    sell_color: function sell_color() {
+      return this.sett.sellColor || '#ec4662';
+    },
+    label_color: function label_color() {
+      return this.sett.labelColor || '#999';
+    },
+    marker_size: function marker_size() {
+      return this.sett.markerSize || 5;
+    },
+    show_label: function show_label() {
+      return this.sett.showLabel !== false;
+    },
+    new_font: function new_font() {
+      return this.sett.font || this.default_font;
+    }
+  },
   methods: {
     meta_info: function meta_info() {
       return {
@@ -4549,33 +4556,6 @@ Range_component.options.__file = "src/components/overlays/Range.vue"
       }].concat(values[3] ? [{
         value: values[3]
       }] : []);
-    }
-  },
-  // Define internal setting & constants here
-  computed: {
-    sett: function sett() {
-      return this.$props.settings;
-    },
-    default_font: function default_font() {
-      return '12px ' + this.$props.font.split('px').pop();
-    },
-    buy_color: function buy_color() {
-      return this.sett.buyColor || '#63df89';
-    },
-    sell_color: function sell_color() {
-      return this.sett.sellColor || '#ec4662';
-    },
-    label_color: function label_color() {
-      return this.sett.labelColor || '#999';
-    },
-    marker_size: function marker_size() {
-      return this.sett.markerSize || 5;
-    },
-    show_label: function show_label() {
-      return this.sett.showLabel !== false;
-    },
-    new_font: function new_font() {
-      return this.sett.font || this.default_font;
     }
   }
 });
@@ -5042,24 +5022,46 @@ var CandleExt = /*#__PURE__*/function () {
       var h = Math.abs(data.o - data.c);
       var max_h = data.c === data.o ? 1 : 2;
       var x05 = Math.floor(data.x) - 0.5;
-      this.ctx.strokeStyle = wick_color;
-      this.ctx.beginPath();
-      this.ctx.moveTo(x05, Math.floor(data.h));
-      this.ctx.lineTo(x05, Math.floor(data.l));
-      this.ctx.stroke();
+      this.ctx.strokeStyle = wick_color; // this.ctx.beginPath();
+      // this.ctx.moveTo(x05, Math.floor(data.h));
+      // this.ctx.lineTo(x05, Math.floor(data.l));
+      // this.ctx.stroke();
 
-      if (data.w > 1.5) {
-        this.ctx.fillStyle = body_color; // TODO: Move common calculations to layout.js
+      this.ctx.beginPath(); // draw Wick
+      // this.ctx.moveTo(data.x, data.l);
+      // this.ctx.lineTo(data.x, data.h);
 
-        var s = green ? 1 : -1;
-        this.ctx.fillRect(Math.floor(data.x - hw - 1), data.c, Math.floor(hw * 2 + 1), s * Math.max(h, max_h));
+      this.ctx.moveTo(data.x, Math.min(data.o, data.c));
+      this.ctx.lineTo(data.x, data.h);
+      this.ctx.moveTo(data.x, Math.max(data.o, data.c));
+      this.ctx.lineTo(data.x, data.l); // draw candle
+
+      if (!green) {
+        this.ctx.fillRect(data.x - 3, Math.min(data.o, data.c), 6, Math.abs(data.o - data.c));
       } else {
-        this.ctx.strokeStyle = body_color;
-        this.ctx.beginPath();
-        this.ctx.moveTo(x05, Math.floor(Math.min(data.o, data.c)));
-        this.ctx.lineTo(x05, Math.floor(Math.max(data.o, data.c)) + (data.o === data.c ? 1 : 0));
-        this.ctx.stroke();
+        this.ctx.rect(data.x - 3, Math.min(data.c, data.o), 6, Math.abs(data.c - data.o));
       }
+
+      this.ctx.stroke(); // if (data.w > 1.5) {
+      //   this.ctx.fillStyle = body_color;
+      //   // TODO: Move common calculations to layout.js
+      //   let s = green ? 1 : -1;
+      //   this.ctx.fillRect(
+      //     Math.floor(data.x - hw - 1),
+      //     data.c,
+      //     Math.floor(hw * 2 + 1),
+      //     s * Math.max(h, max_h)
+      //   );
+      // } else {
+      //   this.ctx.strokeStyle = body_color;
+      //   this.ctx.beginPath();
+      //   this.ctx.moveTo(x05, Math.floor(Math.min(data.o, data.c)));
+      //   this.ctx.lineTo(
+      //     x05,
+      //     Math.floor(Math.max(data.o, data.c)) + (data.o === data.c ? 1 : 0)
+      //   );
+      //   this.ctx.stroke();
+      // }
     }
   }]);
 
@@ -5208,13 +5210,51 @@ var Price = /*#__PURE__*/function () {
 
 
 /* harmony default export */ const Candlesvue_type_script_lang_js_ = ({
-  name: 'Candles',
+  name: "Candles",
   mixins: [overlay],
+  data: function data() {
+    return {
+      price: {}
+    };
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    show_volume: function show_volume() {
+      return "showVolume" in this.sett ? this.sett.showVolume : true;
+    },
+    price_line: function price_line() {
+      return "priceLine" in this.sett ? this.sett.priceLine : true;
+    },
+    colorCandleUp: function colorCandleUp() {
+      return this.sett.colorCandleUp || this.$props.colors.candleUp;
+    },
+    colorCandleDw: function colorCandleDw() {
+      return this.sett.colorCandleDw || this.$props.colors.candleDw;
+    },
+    colorWickUp: function colorWickUp() {
+      return this.sett.colorWickUp || this.$props.colors.wickUp;
+    },
+    colorWickDw: function colorWickDw() {
+      return this.sett.colorWickDw || this.$props.colors.wickDw;
+    },
+    colorWickSm: function colorWickSm() {
+      return this.sett.colorWickSm || this.$props.colors.wickSm;
+    },
+    colorVolUp: function colorVolUp() {
+      return this.sett.colorVolUp || this.$props.colors.volUp;
+    },
+    colorVolDw: function colorVolDw() {
+      return this.sett.colorVolDw || this.$props.colors.volDw;
+    }
+  },
   methods: {
     meta_info: function meta_info() {
       return {
-        author: 'C451',
-        version: '1.2.1'
+        author: "C451",
+        version: "1.2.1"
       };
     },
     init: function init() {
@@ -5242,14 +5282,14 @@ var Price = /*#__PURE__*/function () {
 
       var cc = cnv.candles;
 
-      for (var i = 0, n = cc.length; i < n; i++) {
-        new CandleExt(this, ctx, cc[i]);
+      for (var _i = 0, _n = cc.length; _i < _n; _i++) {
+        new CandleExt(this, ctx, cc[_i]);
       }
 
       if (this.price_line) this.price.draw(ctx);
     },
     use_for: function use_for() {
-      return ['Candles'];
+      return ["Candles"];
     },
     // In case it's added as offchart overlay
     y_range: function y_range() {
@@ -5264,44 +5304,6 @@ var Price = /*#__PURE__*/function () {
 
       return [hi, lo];
     }
-  },
-  // Define internal setting & constants here
-  computed: {
-    sett: function sett() {
-      return this.$props.settings;
-    },
-    show_volume: function show_volume() {
-      return 'showVolume' in this.sett ? this.sett.showVolume : true;
-    },
-    price_line: function price_line() {
-      return 'priceLine' in this.sett ? this.sett.priceLine : true;
-    },
-    colorCandleUp: function colorCandleUp() {
-      return this.sett.colorCandleUp || this.$props.colors.candleUp;
-    },
-    colorCandleDw: function colorCandleDw() {
-      return this.sett.colorCandleDw || this.$props.colors.candleDw;
-    },
-    colorWickUp: function colorWickUp() {
-      return this.sett.colorWickUp || this.$props.colors.wickUp;
-    },
-    colorWickDw: function colorWickDw() {
-      return this.sett.colorWickDw || this.$props.colors.wickDw;
-    },
-    colorWickSm: function colorWickSm() {
-      return this.sett.colorWickSm || this.$props.colors.wickSm;
-    },
-    colorVolUp: function colorVolUp() {
-      return this.sett.colorVolUp || this.$props.colors.volUp;
-    },
-    colorVolDw: function colorVolDw() {
-      return this.sett.colorVolDw || this.$props.colors.volDw;
-    }
-  },
-  data: function data() {
-    return {
-      price: {}
-    };
   }
 });
 ;// CONCATENATED MODULE: ./src/components/overlays/Candles.vue?vue&type=script&lang=js&
@@ -5789,12 +5791,10 @@ function _defineProperty(obj, key, value) {
 var Pin = /*#__PURE__*/function () {
   // (Comp reference, a name in overlay settings,
   // pin parameters)
-  function Pin(comp, name, params) {
+  function Pin(comp, name) {
     var _this = this;
 
-    if (params === void 0) {
-      params = {};
-    }
+    var params = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     classCallCheck_classCallCheck(this, Pin);
 
@@ -5896,11 +5896,8 @@ var Pin = /*#__PURE__*/function () {
     }
   }, {
     key: "update_from",
-    value: function update_from(data, emit) {
-      if (emit === void 0) {
-        emit = false;
-      }
-
+    value: function update_from(data) {
+      var emit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       if (!data) return;
       this.layout = this.comp.layout;
       this.y$ = data[1];
@@ -5932,11 +5929,8 @@ var Pin = /*#__PURE__*/function () {
     }
   }, {
     key: "mousedown",
-    value: function mousedown(event, force) {
-      if (force === void 0) {
-        force = false;
-      }
-
+    value: function mousedown(event) {
+      var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       if (utils.default_prevented(event) && !force) return;
 
       switch (this.state) {
@@ -6664,6 +6658,7 @@ function Gridvue_type_script_lang_js_unsupportedIterableToArray(o, minLen) { if 
 
 function Gridvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
 // Sets up all layers/overlays for the grid with 'grid_id'
 
 
@@ -6683,15 +6678,138 @@ function Gridvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
 
 
 /* harmony default export */ const Gridvue_type_script_lang_js_ = ({
-  name: 'Grid',
-  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays', 'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id', 'config', 'meta', 'shaders'],
-  mixins: [canvas, uxlist],
+  name: "Grid",
   components: {
     Crosshair: components_Crosshair,
     KeyboardListener: KeyboardListener
   },
-  created: function created() {
+  mixins: [canvas, uxlist],
+  props: ["sub", "layout", "range", "interval", "cursor", "colors", "overlays", "width", "height", "data", "grid_id", "y_transform", "font", "tv_id", "config", "meta", "shaders"],
+  data: function data() {
     var _this = this;
+
+    return {
+      layer_events: {
+        "new-grid-layer": this.new_layer,
+        "delete-grid-layer": this.del_layer,
+        "show-grid-layer": function showGridLayer(d) {
+          _this.renderer.show_hide_layer(d);
+
+          _this.redraw();
+        },
+        "redraw-grid": this.redraw,
+        "layer-meta-props": function layerMetaProps(d) {
+          return _this.$emit("layer-meta-props", d);
+        },
+        "custom-event": function customEvent(d) {
+          return _this.$emit("custom-event", d);
+        }
+      },
+      keyboard_events: {
+        "register-kb-listener": function registerKbListener(event) {
+          _this.$emit("register-kb-listener", event);
+        },
+        "remove-kb-listener": function removeKbListener(event) {
+          _this.$emit("remove-kb-listener", event);
+        },
+        keyup: function keyup(event) {
+          if (!_this.is_active) return;
+
+          _this.renderer.propagate("keyup", event);
+        },
+        keydown: function keydown(event) {
+          if (!_this.is_active) return; // TODO: is this neeeded?
+
+          _this.renderer.propagate("keydown", event);
+        },
+        keypress: function keypress(event) {
+          if (!_this.is_active) return;
+
+          _this.renderer.propagate("keypress", event);
+        }
+      }
+    };
+  },
+  computed: {
+    is_active: function is_active() {
+      return this.$props.cursor.t !== undefined && this.$props.cursor.grid_id === this.$props.grid_id;
+    }
+  },
+  watch: {
+    range: {
+      handler: function handler() {
+        var _this2 = this;
+
+        // TODO: Left-side render lag fix:
+        // Overlay data is updated one tick later than
+        // the main sub. Fast fix is to delay redraw()
+        // call. It will be a solution until a better
+        // one comes by.
+        this.$nextTick(function () {
+          return _this2.redraw();
+        });
+      },
+      deep: true
+    },
+    cursor: {
+      handler: function handler() {
+        if (!this.$props.cursor.locked) this.redraw();
+      },
+      deep: true
+    },
+    overlays: {
+      // Track changes in calc() functions
+      handler: function handler(ovs) {
+        var _iterator = Gridvue_type_script_lang_js_createForOfIteratorHelper(ovs),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var ov = _step.value;
+
+            var _iterator2 = Gridvue_type_script_lang_js_createForOfIteratorHelper(this.$children),
+                _step2;
+
+            try {
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+                var comp = _step2.value;
+                if (typeof comp.id !== "string") continue;
+                var tuple = comp.id.split("_");
+                tuple.pop();
+
+                if (tuple.join("_") === ov.name) {
+                  comp.calc = ov.methods.calc;
+                  if (!comp.calc) continue;
+                  var calc = comp.calc.toString();
+
+                  if (calc !== ov.__prevscript__) {
+                    comp.exec_script();
+                  }
+
+                  ov.__prevscript__ = calc;
+                }
+              }
+            } catch (err) {
+              _iterator2.e(err);
+            } finally {
+              _iterator2.f();
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      },
+      deep: true
+    },
+    // Redraw on the shader list change
+    shaders: function shaders(n, p) {
+      this.redraw();
+    }
+  },
+  created: function created() {
+    var _this3 = this;
 
     // List of all possible overlays (builtin + custom)
     this._list = [Spline, Splines, Range, Trades, Channel, Segment, Candles, Volume, Splitters, LineTool, RangeTool].concat(this.$props.overlays);
@@ -6707,107 +6825,71 @@ function Gridvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
         info: x.methods.tool()
       });
       use_for.forEach(function (indicator) {
-        _this._registry[indicator] = i;
+        _this3._registry[indicator] = i;
       });
     });
 
-    this.$emit('custom-event', {
-      event: 'register-tools',
+    this.$emit("custom-event", {
+      event: "register-tools",
       args: tools
     });
-    this.$on('custom-event', function (e) {
-      return _this.on_ux_event(e, 'grid');
+    this.$on("custom-event", function (e) {
+      return _this3.on_ux_event(e, "grid");
     });
   },
   beforeDestroy: function beforeDestroy() {
     if (this.renderer) this.renderer.destroy();
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this4 = this;
 
-    var el = this.$refs['canvas'];
+    var el = this.$refs["canvas"];
     this.renderer = new Grid(el, this);
     this.setup();
     this.$nextTick(function () {
-      return _this2.redraw();
-    });
-  },
-  render: function render(h) {
-    var id = this.$props.grid_id;
-    var layout = this.$props.layout.grids[id];
-    return this.create_canvas(h, "grid-".concat(id), {
-      position: {
-        x: 0,
-        y: layout.offset || 0
-      },
-      attrs: {
-        width: layout.width,
-        height: layout.height,
-        overflow: 'hidden'
-      },
-      style: {
-        backgroundColor: this.$props.colors.back
-      },
-      hs: [h(components_Crosshair, {
-        props: this.common_props(),
-        on: this.layer_events
-      }), h(KeyboardListener, {
-        on: this.keyboard_events
-      }), h(UxLayer, {
-        props: {
-          id: id,
-          tv_id: this.$props.tv_id,
-          uxs: this.uxs,
-          colors: this.$props.colors,
-          config: this.$props.config,
-          updater: Math.random()
-        },
-        on: {
-          'custom-event': this.emit_ux_event
-        }
-      })].concat(this.get_overlays(h))
+      return _this4.redraw();
     });
   },
   methods: {
     new_layer: function new_layer(layer) {
-      var _this3 = this;
+      var _this5 = this;
 
       this.$nextTick(function () {
-        return _this3.renderer.new_layer(layer);
+        return _this5.renderer.new_layer(layer);
       });
     },
     del_layer: function del_layer(layer) {
-      var _this4 = this;
+      var _this6 = this;
 
       this.$nextTick(function () {
-        return _this4.renderer.del_layer(layer);
+        return _this6.renderer.del_layer(layer);
       });
       var grid_id = this.$props.grid_id;
-      this.$emit('custom-event', {
-        event: 'remove-shaders',
+      this.$emit("custom-event", {
+        event: "remove-shaders",
         args: [grid_id, layer]
       }); // TODO: close all interfaces
 
-      this.$emit('custom-event', {
-        event: 'remove-layer-meta',
+      this.$emit("custom-event", {
+        event: "remove-layer-meta",
         args: [grid_id, layer]
       });
       this.remove_all_ux(layer);
     },
     get_overlays: function get_overlays(h) {
-      var _this5 = this;
+      var _this7 = this;
 
       // Distributes overlay data & settings according
       // to this._registry; returns compo list
       var comp_list = [],
           count = {};
 
-      var _iterator = Gridvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
-          _step;
+      var _iterator3 = Gridvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
+          _step3;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var d = _step.value;
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var d = _step3.value;
           var comp = this._list[this._registry[d.type]];
 
           if (comp) {
@@ -6828,15 +6910,15 @@ function Gridvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
           }
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator3.e(err);
       } finally {
-        _iterator.f();
+        _iterator3.f();
       }
 
       return comp_list.map(function (x, i) {
         return h(x.cls, {
-          on: _this5.layer_events,
-          attrs: Object.assign(_this5.common_props(), {
+          on: _this7.layer_events,
+          attrs: Object.assign(_this7.common_props(), {
             id: "".concat(x.type, "_").concat(count[x.type]++),
             type: x.type,
             data: x.data,
@@ -6844,8 +6926,8 @@ function Gridvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
             i0: x.i0,
             tf: x.tf,
             num: i,
-            grid_id: _this5.$props.grid_id,
-            meta: _this5.$props.meta,
+            grid_id: _this7.$props.grid_id,
+            meta: _this7.$props.meta,
             last: x.last
           })
         });
@@ -6863,8 +6945,8 @@ function Gridvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
       };
     },
     emit_ux_event: function emit_ux_event(e) {
-      var e_pass = this.on_ux_event(e, 'grid');
-      if (e_pass) this.$emit('custom-event', e);
+      var e_pass = this.on_ux_event(e, "grid");
+      if (e_pass) this.$emit("custom-event", e);
     },
     // Replace the current comp with 'renderer'
     inject_renderer: function inject_renderer(comp) {
@@ -6885,128 +6967,41 @@ function Gridvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
       return comp;
     }
   },
-  computed: {
-    is_active: function is_active() {
-      return this.$props.cursor.t !== undefined && this.$props.cursor.grid_id === this.$props.grid_id;
-    }
-  },
-  watch: {
-    range: {
-      handler: function handler() {
-        var _this6 = this;
-
-        // TODO: Left-side render lag fix:
-        // Overlay data is updated one tick later than
-        // the main sub. Fast fix is to delay redraw()
-        // call. It will be a solution until a better
-        // one comes by.
-        this.$nextTick(function () {
-          return _this6.redraw();
-        });
+  render: function render(h) {
+    var id = this.$props.grid_id;
+    var layout = this.$props.layout.grids[id];
+    return this.create_canvas(h, "grid-".concat(id), {
+      position: {
+        x: 0,
+        y: layout.offset || 0
       },
-      deep: true
-    },
-    cursor: {
-      handler: function handler() {
-        if (!this.$props.cursor.locked) this.redraw();
+      attrs: {
+        width: layout.width,
+        height: layout.height,
+        overflow: "hidden"
       },
-      deep: true
-    },
-    overlays: {
-      // Track changes in calc() functions
-      handler: function handler(ovs) {
-        var _iterator2 = Gridvue_type_script_lang_js_createForOfIteratorHelper(ovs),
-            _step2;
-
-        try {
-          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-            var ov = _step2.value;
-
-            var _iterator3 = Gridvue_type_script_lang_js_createForOfIteratorHelper(this.$children),
-                _step3;
-
-            try {
-              for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-                var comp = _step3.value;
-                if (typeof comp.id !== 'string') continue;
-                var tuple = comp.id.split('_');
-                tuple.pop();
-
-                if (tuple.join('_') === ov.name) {
-                  comp.calc = ov.methods.calc;
-                  if (!comp.calc) continue;
-                  var calc = comp.calc.toString();
-
-                  if (calc !== ov.__prevscript__) {
-                    comp.exec_script();
-                  }
-
-                  ov.__prevscript__ = calc;
-                }
-              }
-            } catch (err) {
-              _iterator3.e(err);
-            } finally {
-              _iterator3.f();
-            }
-          }
-        } catch (err) {
-          _iterator2.e(err);
-        } finally {
-          _iterator2.f();
+      style: {
+        backgroundColor: this.$props.colors.back
+      },
+      hs: [h(components_Crosshair, {
+        props: this.common_props(),
+        on: this.layer_events
+      }), h(KeyboardListener, {
+        on: this.keyboard_events
+      }), h(UxLayer, {
+        props: {
+          id: id,
+          tv_id: this.$props.tv_id,
+          uxs: this.uxs,
+          colors: this.$props.colors,
+          config: this.$props.config,
+          updater: Math.random()
+        },
+        on: {
+          "custom-event": this.emit_ux_event
         }
-      },
-      deep: true
-    },
-    // Redraw on the shader list change
-    shaders: function shaders(n, p) {
-      this.redraw();
-    }
-  },
-  data: function data() {
-    var _this7 = this;
-
-    return {
-      layer_events: {
-        'new-grid-layer': this.new_layer,
-        'delete-grid-layer': this.del_layer,
-        'show-grid-layer': function showGridLayer(d) {
-          _this7.renderer.show_hide_layer(d);
-
-          _this7.redraw();
-        },
-        'redraw-grid': this.redraw,
-        'layer-meta-props': function layerMetaProps(d) {
-          return _this7.$emit('layer-meta-props', d);
-        },
-        'custom-event': function customEvent(d) {
-          return _this7.$emit('custom-event', d);
-        }
-      },
-      keyboard_events: {
-        'register-kb-listener': function registerKbListener(event) {
-          _this7.$emit('register-kb-listener', event);
-        },
-        'remove-kb-listener': function removeKbListener(event) {
-          _this7.$emit('remove-kb-listener', event);
-        },
-        'keyup': function keyup(event) {
-          if (!_this7.is_active) return;
-
-          _this7.renderer.propagate('keyup', event);
-        },
-        'keydown': function keydown(event) {
-          if (!_this7.is_active) return; // TODO: is this neeeded?
-
-          _this7.renderer.propagate('keydown', event);
-        },
-        'keypress': function keypress(event) {
-          if (!_this7.is_active) return;
-
-          _this7.renderer.propagate('keypress', event);
-        }
-      }
-    };
+      })].concat(this.get_overlays(h))
+    });
   }
 });
 ;// CONCATENATED MODULE: ./src/components/Grid.vue?vue&type=script&lang=js&
@@ -7050,10 +7045,8 @@ function sidebar_arrayLikeToArray(arr, len) { if (len == null || len > arr.lengt
 var PANHEIGHT;
 
 var Sidebar = /*#__PURE__*/function () {
-  function Sidebar(canvas, comp, side) {
-    if (side === void 0) {
-      side = 'right';
-    }
+  function Sidebar(canvas, comp) {
+    var side = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'right';
 
     classCallCheck_classCallCheck(this, Sidebar);
 
@@ -7277,17 +7270,11 @@ var Sidebar = /*#__PURE__*/function () {
 
   }, {
     key: "calc_range",
-    value: function calc_range(diff1, diff2) {
+    value: function calc_range() {
       var _this2 = this;
 
-      if (diff1 === void 0) {
-        diff1 = 1;
-      }
-
-      if (diff2 === void 0) {
-        diff2 = 1;
-      }
-
+      var diff1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var diff2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var z = this.zoom / this.drug.z;
       var zk = (1 / z - 1) / 2;
       var range = this.y_range.slice();
@@ -7475,36 +7462,47 @@ var Legendvue_type_template_id_34724886_render = function() {
                   staticClass: "t-vue-title",
                   style: { color: _vm.common.colors.title }
                 },
-                [
-                  _vm._v(
-                    "\n              " +
-                      _vm._s(_vm.common.title_txt) +
-                      "\n        "
-                  )
-                ]
+                [_vm._v("\n      " + _vm._s(_vm.common.title_txt) + "\n    ")]
               ),
               _vm._v(" "),
               _vm.show_values
                 ? _c("span", [
-                    _vm._v("\n            O"),
                     _c("span", { staticClass: "t-vue-lspan" }, [
-                      _vm._v(_vm._s(_vm.ohlcv[0]))
+                      _vm._v(_vm._s(_vm.at[2]) + "%; ")
                     ]),
-                    _vm._v("\n            H"),
+                    _vm._v(" "),
                     _c("span", { staticClass: "t-vue-lspan" }, [
-                      _vm._v(_vm._s(_vm.ohlcv[1]))
+                      _vm._v(
+                        "收/开 " +
+                          _vm._s(_vm.ohlcv[3]) +
+                          "/ " +
+                          _vm._s(_vm.ohlcv[0]) +
+                          "; "
+                      )
                     ]),
-                    _vm._v("\n            L"),
+                    _vm._v(" "),
                     _c("span", { staticClass: "t-vue-lspan" }, [
-                      _vm._v(_vm._s(_vm.ohlcv[2]))
+                      _vm._v(
+                        "高/低 " +
+                          _vm._s(_vm.ohlcv[1]) +
+                          " / " +
+                          _vm._s(_vm.ohlcv[2]) +
+                          ", " +
+                          _vm._s(_vm.incOf(_vm.ohlcv[1], _vm.ohlcv[2])) +
+                          "% ;"
+                      )
                     ]),
-                    _vm._v("\n            C"),
+                    _vm._v(" "),
                     _c("span", { staticClass: "t-vue-lspan" }, [
-                      _vm._v(_vm._s(_vm.ohlcv[3]))
+                      _vm._v(
+                        "金额 " +
+                          _vm._s(_vm.prettyNum(_vm.at[0] / 10000000)) +
+                          "亿 ;"
+                      )
                     ]),
-                    _vm._v("\n            V"),
+                    _vm._v(" "),
                     _c("span", { staticClass: "t-vue-lspan" }, [
-                      _vm._v(_vm._s(_vm.ohlcv[4]))
+                      _vm._v("换 " + _vm._s(_vm.prettyNum(_vm.at[1])) + "% ;")
                     ])
                   ])
                 : _vm._e(),
@@ -7518,9 +7516,9 @@ var Legendvue_type_template_id_34724886_render = function() {
                     },
                     [
                       _vm._v(
-                        "\n            " +
+                        "\n      " +
                           _vm._s((_vm.common.meta.last || [])[4]) +
-                          "\n        "
+                          "\n    "
                       )
                     ]
                   )
@@ -7529,7 +7527,7 @@ var Legendvue_type_template_id_34724886_render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm._l(this.indicators, function(ind) {
+      _vm._l(_vm.indicators, function(ind) {
         return _c(
           "div",
           { staticClass: "t-vue-ind" },
@@ -7563,13 +7561,7 @@ var Legendvue_type_template_id_34724886_render = function() {
                             staticClass: "t-vue-lspan t-vue-ivalue",
                             style: { color: v.color }
                           },
-                          [
-                            _vm._v(
-                              "\n                " +
-                                _vm._s(v.value) +
-                                "\n            "
-                            )
-                          ]
+                          [_vm._v("\n        " + _vm._s(v.value) + "\n      ")]
                         )
                       : _vm._e()
                   }),
@@ -7579,7 +7571,7 @@ var Legendvue_type_template_id_34724886_render = function() {
             _vm._v(" "),
             ind.unk
               ? _c("span", { staticClass: "t-vue-unknown" }, [
-                  _vm._v("\n            (Unknown type)\n        ")
+                  _vm._v(" (Unknown type) ")
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -7919,24 +7911,30 @@ Spinner_component.options.__file = "src/components/Spinner.vue"
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const Legendvue_type_script_lang_js_ = ({
-  name: 'ChartLegend',
-  props: ['common', 'values', 'grid_id', 'meta_props'],
+  name: "ChartLegend",
   components: {
     ButtonGroup: ButtonGroup,
     Spinner: Spinner
   },
+  props: ["common", "values", "grid_id", "meta_props"],
   computed: {
     ohlcv: function ohlcv() {
       if (!this.$props.values || !this.$props.values.ohlcv) {
-        return Array(6).fill('n/a');
-      }
+        return Array(6).fill("n/a");
+      } //   const prec = this.layout.prec;
+      // TODO: main the main legend more customizable
 
-      var prec = this.layout.prec; // TODO: main the main legend more customizable
 
-      var id = this.main_type + '_0';
+      var id = this.main_type + "_0";
       var meta = this.$props.meta_props[id] || {};
 
       if (meta.legend) {
@@ -7945,7 +7943,11 @@ Spinner_component.options.__file = "src/components/Spinner.vue"
         });
       }
 
-      return [this.$props.values.ohlcv[1].toFixed(prec), this.$props.values.ohlcv[2].toFixed(prec), this.$props.values.ohlcv[3].toFixed(prec), this.$props.values.ohlcv[4].toFixed(prec), this.$props.values.ohlcv[5] ? this.$props.values.ohlcv[5].toFixed(2) : 'n/a'];
+      return [this.$props.values.ohlcv[1].toFixed(2), this.$props.values.ohlcv[2].toFixed(2), this.$props.values.ohlcv[3].toFixed(2), this.$props.values.ohlcv[4].toFixed(2), this.$props.values.ohlcv[5] ? this.$props.values.ohlcv[5].toFixed(0) : "n/a"];
+    },
+    at: function at() {
+      if (!this.$props.values || !this.$props.values.ohlcv) return Array(6).fill("n/a");
+      return this.$props.values.ohlcv.slice(7);
     },
     // TODO: add support for { grid: { id : N }}
     indicators: function indicators() {
@@ -7960,7 +7962,7 @@ Spinner_component.options.__file = "src/components/Spinner.vue"
         if (!(x.type in types)) types[x.type] = 0;
         var id = x.type + "_".concat(types[x.type]++);
         return {
-          v: 'display' in x.settings ? x.settings.display : true,
+          v: "display" in x.settings ? x.settings.display : true,
           name: x.name || id,
           index: (_this.off_data || _this.json_data).indexOf(x),
           id: id,
@@ -7996,7 +7998,7 @@ Spinner_component.options.__file = "src/components/Spinner.vue"
       return f ? f.type : undefined;
     },
     show_values: function show_values() {
-      return this.common.cursor.mode !== 'explore';
+      return this.common.cursor.mode !== "explore";
     }
   },
   methods: {
@@ -8010,7 +8012,7 @@ Spinner_component.options.__file = "src/components/Spinner.vue"
       return values[id].slice(1).map(function (x, i) {
         var cs = meta.data_colors ? meta.data_colors() : [];
 
-        if (typeof x == 'number') {
+        if (typeof x == "number") {
           // Show 8 digits for small values
           x = x.toFixed(Math.abs(x) > 0.001 ? 4 : 8);
         }
@@ -8023,11 +8025,19 @@ Spinner_component.options.__file = "src/components/Spinner.vue"
     },
     n_a: function n_a(len) {
       return Array(len).fill({
-        value: 'n/a'
+        value: "n/a"
       });
     },
     button_click: function button_click(event) {
-      this.$emit('legend-button-click', event);
+      this.$emit("legend-button-click", event);
+    },
+    incOf: function incOf(value, base) {
+      return Math.round((value - base) * 10000 / base) / 100;
+    },
+    prettyNum: function prettyNum(num) {
+      var scale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+      var p = Math.pow(10, scale);
+      return Math.round(num * p) / p;
     }
   }
 });
@@ -8158,69 +8168,28 @@ function shaders_arrayLikeToArray(arr, len) { if (len == null || len > arr.lengt
 //
 //
 //
+//
+//
+//
 
 
 
 
 /* harmony default export */ const Sectionvue_type_script_lang_js_ = ({
-  name: 'GridSection',
-  props: ['common', 'grid_id'],
-  mixins: [shaders],
+  name: "GridSection",
   components: {
     Grid: components_Grid,
     Sidebar: components_Sidebar,
     ChartLegend: Legend
   },
-  mounted: function mounted() {
-    this.init_shaders(this.$props.common.skin);
-  },
-  methods: {
-    range_changed: function range_changed(r) {
-      this.$emit('range-changed', r);
-    },
-    cursor_changed: function cursor_changed(c) {
-      c.grid_id = this.$props.grid_id;
-      this.$emit('cursor-changed', c);
-    },
-    cursor_locked: function cursor_locked(state) {
-      this.$emit('cursor-locked', state);
-    },
-    sidebar_transform: function sidebar_transform(s) {
-      this.$emit('sidebar-transform', s);
-    },
-    emit_meta_props: function emit_meta_props(d) {
-      this.$set(this.meta_props, d.layer_id, d);
-      this.$emit('layer-meta-props', d);
-    },
-    emit_custom_event: function emit_custom_event(d) {
-      this.on_shader_event(d, 'sidebar');
-      this.$emit('custom-event', d);
-    },
-    button_click: function button_click(event) {
-      this.$emit('legend-button-click', event);
-    },
-    register_kb: function register_kb(event) {
-      this.$emit('register-kb-listener', event);
-    },
-    remove_kb: function remove_kb(event) {
-      this.$emit('remove-kb-listener', event);
-    },
-    rezoom_range: function rezoom_range(event) {
-      var id = 'sb-' + event.grid_id;
-
-      if (this.$refs[id]) {
-        this.$refs[id].renderer.rezoom_range(event.z, event.diff1, event.diff2);
-      }
-    },
-    ghash: function ghash(val) {
-      // Measures grid heights configuration
-      var hs = val.layout.grids.map(function (x) {
-        return x.height;
-      });
-      return hs.reduce(function (a, b) {
-        return a + b;
-      }, '');
-    }
+  mixins: [shaders],
+  props: ["common", "grid_id"],
+  data: function data() {
+    return {
+      meta_props: {},
+      rerender: 0,
+      last_ghash: ""
+    };
   },
   computed: {
     // Component-specific props subsets:
@@ -8284,12 +8253,12 @@ function shaders_arrayLikeToArray(arr, len) { if (len == null || len > arr.lengt
     },
     grid_shaders: function grid_shaders() {
       return this.shaders.filter(function (x) {
-        return x.target === 'grid';
+        return x.target === "grid";
       });
     },
     sb_shaders: function sb_shaders() {
       return this.shaders.filter(function (x) {
-        return x.target === 'sidebar';
+        return x.target === "sidebar";
       });
     }
   },
@@ -8312,12 +8281,56 @@ function shaders_arrayLikeToArray(arr, len) { if (len == null || len > arr.lengt
       deep: true
     }
   },
-  data: function data() {
-    return {
-      meta_props: {},
-      rerender: 0,
-      last_ghash: ''
-    };
+  mounted: function mounted() {
+    this.init_shaders(this.$props.common.skin);
+  },
+  methods: {
+    range_changed: function range_changed(r) {
+      this.$emit("range-changed", r);
+    },
+    cursor_changed: function cursor_changed(c) {
+      c.grid_id = this.$props.grid_id;
+      this.$emit("cursor-changed", c);
+    },
+    cursor_locked: function cursor_locked(state) {
+      this.$emit("cursor-locked", state);
+    },
+    sidebar_transform: function sidebar_transform(s) {
+      this.$emit("sidebar-transform", s);
+    },
+    emit_meta_props: function emit_meta_props(d) {
+      this.$set(this.meta_props, d.layer_id, d);
+      this.$emit("layer-meta-props", d);
+    },
+    emit_custom_event: function emit_custom_event(d) {
+      this.on_shader_event(d, "sidebar");
+      this.$emit("custom-event", d);
+    },
+    button_click: function button_click(event) {
+      this.$emit("legend-button-click", event);
+    },
+    register_kb: function register_kb(event) {
+      this.$emit("register-kb-listener", event);
+    },
+    remove_kb: function remove_kb(event) {
+      this.$emit("remove-kb-listener", event);
+    },
+    rezoom_range: function rezoom_range(event) {
+      var id = "sb-" + event.grid_id;
+
+      if (this.$refs[id]) {
+        this.$refs[id].renderer.rezoom_range(event.z, event.diff1, event.diff2);
+      }
+    },
+    ghash: function ghash(val) {
+      // Measures grid heights configuration
+      var hs = val.layout.grids.map(function (x) {
+        return x.height;
+      });
+      return hs.reduce(function (a, b) {
+        return a + b;
+      }, "");
+    }
   }
 });
 ;// CONCATENATED MODULE: ./src/components/Section.vue?vue&type=script&lang=js&
@@ -9098,6 +9111,8 @@ var TI = /*#__PURE__*/function () {
 //
 //
 //
+//
+//
 
 
 
@@ -9111,12 +9126,181 @@ var TI = /*#__PURE__*/function () {
 
 /* harmony default export */ const Chartvue_type_script_lang_js_ = ({
   name: 'Chart',
-  props: ['title_txt', 'data', 'width', 'height', 'font', 'colors', 'overlays', 'tv_id', 'config', 'buttons', 'toolbar', 'ib', 'skin', 'timezone'],
-  mixins: [shaders, datatrack],
   components: {
     GridSection: Section,
     Botbar: components_Botbar,
     Keyboard: Keyboard
+  },
+  mixins: [shaders, datatrack],
+  props: ['title_txt', 'data', 'width', 'height', 'font', 'colors', 'overlays', 'tv_id', 'config', 'buttons', 'toolbar', 'ib', 'skin', 'timezone'],
+  data: function data() {
+    return {
+      // Current data slice
+      sub: [],
+      // Time range
+      range: [],
+      // Candlestick interval
+      interval: 0,
+      // Crosshair states
+      cursor: {
+        x: null,
+        y: null,
+        t: null,
+        y$: null,
+        grid_id: null,
+        locked: false,
+        values: {},
+        scroll_lock: false,
+        mode: utils.xmode()
+      },
+      // A trick to re-render botbar
+      rerender: 0,
+      // Layers meta-props (changing behaviour)
+      layers_meta: {},
+      // Y-transforms (for y-zoom and -shift)
+      y_transforms: {},
+      // Default OHLCV settings (when using DataStructure v1.0)
+      settings_ohlcv: {},
+      // Default overlay settings
+      settings_ov: {},
+      // Meta data
+      last_candle: [],
+      last_values: {},
+      sub_start: undefined,
+      activated: false
+    };
+  },
+  computed: {
+    // Component-specific props subsets:
+    main_section: function main_section() {
+      var p = Object.assign({}, this.common_props());
+      p.data = this.overlay_subset(this.onchart, 'onchart');
+      p.data.push({
+        type: this.chart.type || 'Candles',
+        main: true,
+        data: this.sub,
+        i0: this.sub_start,
+        settings: this.chart.settings || this.settings_ohlcv,
+        grid: this.chart.grid || {},
+        last: this.last_candle
+      });
+      p.overlays = this.$props.overlays;
+      return p;
+    },
+    sub_section: function sub_section() {
+      var p = Object.assign({}, this.common_props());
+      p.data = this.overlay_subset(this.offchart, 'offchart');
+      p.overlays = this.$props.overlays;
+      return p;
+    },
+    botbar_props: function botbar_props() {
+      var p = Object.assign({}, this.common_props());
+      p.width = p.layout.botbar.width;
+      p.height = p.layout.botbar.height;
+      p.rerender = this.rerender;
+      return p;
+    },
+    offsub: function offsub() {
+      return this.overlay_subset(this.offchart, 'offchart');
+    },
+    // Datasets: candles, onchart, offchart indicators
+    ohlcv: function ohlcv() {
+      return this.$props.data.ohlcv || this.chart.data || [];
+    },
+    chart: function chart() {
+      return this.$props.data.chart || {
+        grid: {}
+      };
+    },
+    onchart: function onchart() {
+      return this.$props.data.onchart || [];
+    },
+    offchart: function offchart() {
+      return this.$props.data.offchart || [];
+    },
+    filter: function filter() {
+      return this.$props.ib ? utils.fast_filter_i : utils.fast_filter;
+    },
+    styles: function styles() {
+      var w = this.$props.toolbar ? this.$props.config.TOOLBAR : 0;
+      return {
+        'margin-left': "".concat(w, "px")
+      };
+    },
+    meta: function meta() {
+      return {
+        last: this.last_candle,
+        sub_start: this.sub_start,
+        activated: this.activated
+      };
+    },
+    forced_tf: function forced_tf() {
+      return this.chart.tf;
+    }
+  },
+  watch: {
+    width: function width() {
+      this.update_layout();
+      if (this._hook_resize) this.ce('?chart-resize');
+    },
+    height: function height() {
+      this.update_layout();
+      if (this._hook_resize) this.ce('?chart-resize');
+    },
+    ib: function ib(nw) {
+      if (!nw) {
+        // Change range index => time
+        var t1 = this.ti_map.i2t(this.range[0]);
+        var t2 = this.ti_map.i2t(this.range[1]);
+        utils.overwrite(this.range, [t1, t2]);
+        this.interval = this.interval_ms;
+      } else {
+        this.init_range(); // TODO: calc index range instead
+
+        utils.overwrite(this.range, this.range);
+        this.interval = 1;
+      }
+
+      var sub = this.subset();
+      utils.overwrite(this.sub, sub);
+      this.update_layout();
+    },
+    timezone: function timezone() {
+      this.update_layout();
+    },
+    colors: function colors() {
+      utils.overwrite(this.range, this.range);
+    },
+    forced_tf: function forced_tf(n, p) {
+      this.update_layout(true);
+      this.ce('exec-all-scripts');
+    },
+    data: {
+      handler: function handler(n, p) {
+        if (!this.sub.length) this.init_range();
+        var sub = this.subset(); // Fixes Infinite loop warn, when the subset is empty
+        // TODO: Consider removing 'sub' from data entirely
+
+        if (this.sub.length || sub.length) {
+          utils.overwrite(this.sub, sub);
+        }
+
+        var nw = this.data_changed();
+        this.update_layout(nw);
+        utils.overwrite(this.range, this.range);
+        this.cursor.scroll_lock = !!n.scrollLock;
+
+        if (n.scrollLock && this.cursor.locked) {
+          this.cursor.locked = false;
+        }
+
+        if (this._hook_data) this.ce('?chart-data', nw);
+        this.update_last_values(); // TODO: update legend values for overalys
+
+        this.rerender++;
+      },
+      deep: true
+    }
   },
   created: function created() {
     // Context for text measurements
@@ -9202,10 +9386,8 @@ var TI = /*#__PURE__*/function () {
         utils.overwrite(this.range, [s - this.interval * d, l + this.interval * ml]);
       }
     },
-    subset: function subset(range) {
-      if (range === void 0) {
-        range = this.range;
-      }
+    subset: function subset() {
+      var range = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.range;
 
       var _this$filter = this.filter(this.ohlcv, range[0] - this.interval, range[1]),
           _this$filter2 = _slicedToArray(_this$filter, 2),
@@ -9345,175 +9527,6 @@ var TI = /*#__PURE__*/function () {
       list.forEach(function (x) {
         return _this4["_hook_".concat(x)] = true;
       });
-    }
-  },
-  computed: {
-    // Component-specific props subsets:
-    main_section: function main_section() {
-      var p = Object.assign({}, this.common_props());
-      p.data = this.overlay_subset(this.onchart, 'onchart');
-      p.data.push({
-        type: this.chart.type || 'Candles',
-        main: true,
-        data: this.sub,
-        i0: this.sub_start,
-        settings: this.chart.settings || this.settings_ohlcv,
-        grid: this.chart.grid || {},
-        last: this.last_candle
-      });
-      p.overlays = this.$props.overlays;
-      return p;
-    },
-    sub_section: function sub_section() {
-      var p = Object.assign({}, this.common_props());
-      p.data = this.overlay_subset(this.offchart, 'offchart');
-      p.overlays = this.$props.overlays;
-      return p;
-    },
-    botbar_props: function botbar_props() {
-      var p = Object.assign({}, this.common_props());
-      p.width = p.layout.botbar.width;
-      p.height = p.layout.botbar.height;
-      p.rerender = this.rerender;
-      return p;
-    },
-    offsub: function offsub() {
-      return this.overlay_subset(this.offchart, 'offchart');
-    },
-    // Datasets: candles, onchart, offchart indicators
-    ohlcv: function ohlcv() {
-      return this.$props.data.ohlcv || this.chart.data || [];
-    },
-    chart: function chart() {
-      return this.$props.data.chart || {
-        grid: {}
-      };
-    },
-    onchart: function onchart() {
-      return this.$props.data.onchart || [];
-    },
-    offchart: function offchart() {
-      return this.$props.data.offchart || [];
-    },
-    filter: function filter() {
-      return this.$props.ib ? utils.fast_filter_i : utils.fast_filter;
-    },
-    styles: function styles() {
-      var w = this.$props.toolbar ? this.$props.config.TOOLBAR : 0;
-      return {
-        'margin-left': "".concat(w, "px")
-      };
-    },
-    meta: function meta() {
-      return {
-        last: this.last_candle,
-        sub_start: this.sub_start,
-        activated: this.activated
-      };
-    },
-    forced_tf: function forced_tf() {
-      return this.chart.tf;
-    }
-  },
-  data: function data() {
-    return {
-      // Current data slice
-      sub: [],
-      // Time range
-      range: [],
-      // Candlestick interval
-      interval: 0,
-      // Crosshair states
-      cursor: {
-        x: null,
-        y: null,
-        t: null,
-        y$: null,
-        grid_id: null,
-        locked: false,
-        values: {},
-        scroll_lock: false,
-        mode: utils.xmode()
-      },
-      // A trick to re-render botbar
-      rerender: 0,
-      // Layers meta-props (changing behaviour)
-      layers_meta: {},
-      // Y-transforms (for y-zoom and -shift)
-      y_transforms: {},
-      // Default OHLCV settings (when using DataStructure v1.0)
-      settings_ohlcv: {},
-      // Default overlay settings
-      settings_ov: {},
-      // Meta data
-      last_candle: [],
-      last_values: {},
-      sub_start: undefined,
-      activated: false
-    };
-  },
-  watch: {
-    width: function width() {
-      this.update_layout();
-      if (this._hook_resize) this.ce('?chart-resize');
-    },
-    height: function height() {
-      this.update_layout();
-      if (this._hook_resize) this.ce('?chart-resize');
-    },
-    ib: function ib(nw) {
-      if (!nw) {
-        // Change range index => time
-        var t1 = this.ti_map.i2t(this.range[0]);
-        var t2 = this.ti_map.i2t(this.range[1]);
-        utils.overwrite(this.range, [t1, t2]);
-        this.interval = this.interval_ms;
-      } else {
-        this.init_range(); // TODO: calc index range instead
-
-        utils.overwrite(this.range, this.range);
-        this.interval = 1;
-      }
-
-      var sub = this.subset();
-      utils.overwrite(this.sub, sub);
-      this.update_layout();
-    },
-    timezone: function timezone() {
-      this.update_layout();
-    },
-    colors: function colors() {
-      utils.overwrite(this.range, this.range);
-    },
-    forced_tf: function forced_tf(n, p) {
-      this.update_layout(true);
-      this.ce('exec-all-scripts');
-    },
-    data: {
-      handler: function handler(n, p) {
-        if (!this.sub.length) this.init_range();
-        var sub = this.subset(); // Fixes Infinite loop warn, when the subset is empty
-        // TODO: Consider removing 'sub' from data entirely
-
-        if (this.sub.length || sub.length) {
-          utils.overwrite(this.sub, sub);
-        }
-
-        var nw = this.data_changed();
-        this.update_layout(nw);
-        utils.overwrite(this.range, this.range);
-        this.cursor.scroll_lock = !!n.scrollLock;
-
-        if (n.scrollLock && this.cursor.locked) {
-          this.cursor.locked = false;
-        }
-
-        if (this._hook_data) this.ce('?chart-data', nw);
-        this.update_last_values(); // TODO: update legend values for overalys
-
-        this.rerender++;
-      },
-      deep: true
     }
   }
 });
@@ -10572,6 +10585,14 @@ function TradingVuevue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10733,6 +10754,12 @@ function TradingVuevue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len 
       "default": 0
     }
   },
+  data: function data() {
+    return {
+      reset: 0,
+      tip: null
+    };
+  },
   computed: {
     // Copy a subset of TradingVue props
     chart_props: function chart_props() {
@@ -10802,12 +10829,6 @@ function TradingVuevue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len 
       return this.skin_proto && this.skin_proto.font ? this.skin_proto.font : this.font;
     }
   },
-  data: function data() {
-    return {
-      reset: 0,
-      tip: null
-    };
-  },
   beforeDestroy: function beforeDestroy() {
     this.custom_event({
       event: 'before-destroy'
@@ -10816,13 +10837,10 @@ function TradingVuevue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len 
   },
   methods: {
     // TODO: reset extensions?
-    resetChart: function resetChart(resetRange) {
+    resetChart: function resetChart() {
       var _this = this;
 
-      if (resetRange === void 0) {
-        resetRange = true;
-      }
-
+      var resetRange = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       this.reset++;
       var range = this.getRange();
 
@@ -10882,11 +10900,8 @@ function TradingVuevue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len 
 
       return cursor;
     },
-    showTheTip: function showTheTip(text, color) {
-      if (color === void 0) {
-        color = "orange";
-      }
-
+    showTheTip: function showTheTip(text) {
+      var color = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "orange";
       this.tip = {
         text: text,
         color: color
@@ -11028,7 +11043,7 @@ function _asyncToGenerator(fn) {
 var regenerator = __webpack_require__(757);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 ;// CONCATENATED MODULE: ./src/helpers/tmp/ww$$$.json
-const ww$$$_namespaceObject = JSON.parse('["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"]');
+const ww$$$_namespaceObject = JSON.parse('["DwQgIg8gwgKgmgBQKIAIAWAXAtgGwHwBQwmuKOAhgHYDmAvAEQCml9hxj5AJm1oxuSgDGacgCcAznwYBXDADMAtAA5WRDAEsMORniSjRAe1HAA9Bq06iJtB25EARgc4BPNgAdROqFUoGMKAHEkGBQTcUFRdTcMAH0AdziAOjijAGtGUUSAK3FTD0tTRxc2a2x8AiA==="]');
 // EXTERNAL MODULE: ./node_modules/lz-string/libs/lz-string.js
 var lz_string = __webpack_require__(961);
 var lz_string_default = /*#__PURE__*/__webpack_require__.n(lz_string);
@@ -11199,17 +11214,16 @@ var WebWork = /*#__PURE__*/function () {
   }, {
     key: "relay",
     value: function () {
-      var _relay = _asyncToGenerator( /*#__PURE__*/regenerator_default().mark(function _callee2(event, just) {
+      var _relay = _asyncToGenerator( /*#__PURE__*/regenerator_default().mark(function _callee2(event) {
         var _this4 = this;
 
+        var just,
+            _args2 = arguments;
         return regenerator_default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (just === void 0) {
-                  just = false;
-                }
-
+                just = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : false;
                 return _context2.abrupt("return", new Promise(function (rs, rj) {
                   _this4.send(event, event.tx_keys);
 
@@ -11228,7 +11242,7 @@ var WebWork = /*#__PURE__*/function () {
         }, _callee2);
       }));
 
-      function relay(_x4, _x5) {
+      function relay(_x4) {
         return _relay.apply(this, arguments);
       }
 
@@ -11271,11 +11285,8 @@ function f_args(src) {
 function f_body(src) {
   return src.slice(src.indexOf("{") + 1, src.lastIndexOf("}"));
 }
-function wrap_idxs(src, pre) {
-  if (pre === void 0) {
-    pre = '';
-  }
-
+function wrap_idxs(src) {
+  var pre = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   SBRACKETS.lastIndex = 0;
   var changed = false;
 
@@ -11396,11 +11407,8 @@ function ovf(obj, f) {
 // TODO: optimize (remember the penultimate
 // iteration and start from there)
 
-function nextt(data, t, ti) {
-  if (ti === void 0) {
-    ti = 0;
-  }
-
+function nextt(data, t) {
+  var ti = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
   var i0 = 0;
   var iN = data.length - 1;
 
@@ -11518,11 +11526,8 @@ var Dataset = /*#__PURE__*/function () {
   createClass_createClass(Dataset, [{
     key: "set",
     value: // Set data (overwrite the whole dataset)
-    function set(data, exec) {
-      if (exec === void 0) {
-        exec = true;
-      }
-
+    function set(data) {
+      var exec = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       this.dc.ww.just('dataset-op', {
         id: this.id,
         type: 'set',
@@ -11541,11 +11546,8 @@ var Dataset = /*#__PURE__*/function () {
 
   }, {
     key: "merge",
-    value: function merge(data, exec) {
-      if (exec === void 0) {
-        exec = true;
-      }
-
+    value: function merge(data) {
+      var exec = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       this.dc.ww.just('dataset-op', {
         id: this.id,
         type: 'mrg',
@@ -11556,11 +11558,8 @@ var Dataset = /*#__PURE__*/function () {
 
   }, {
     key: "remove",
-    value: function remove(exec) {
-      if (exec === void 0) {
-        exec = true;
-      }
-
+    value: function remove() {
+      var exec = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       this.dc.del("datasets.".concat(this.id));
       this.dc.ww.just('dataset-op', {
         id: this.id,
@@ -12615,17 +12614,18 @@ var DCCore = /*#__PURE__*/function (_DCEvents) {
   }, {
     key: "range_changed",
     value: function () {
-      var _range_changed = _asyncToGenerator( /*#__PURE__*/regenerator_default().mark(function _callee(range, tf, check) {
+      var _range_changed = _asyncToGenerator( /*#__PURE__*/regenerator_default().mark(function _callee(range, tf) {
         var _this2 = this;
 
-        var first, prom;
+        var check,
+            first,
+            prom,
+            _args = arguments;
         return regenerator_default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (check === void 0) {
-                  check = false;
-                }
+                check = _args.length > 2 && _args[2] !== undefined ? _args[2] : false;
 
                 if (this.loader) {
                   _context.next = 3;
@@ -12687,7 +12687,7 @@ var DCCore = /*#__PURE__*/function (_DCEvents) {
         }, _callee, this);
       }));
 
-      function range_changed(_x, _x2, _x3) {
+      function range_changed(_x, _x2) {
         return _range_changed.apply(this, arguments);
       }
 
@@ -12977,11 +12977,8 @@ var DCCore = /*#__PURE__*/function (_DCEvents) {
     }
   }, {
     key: "merge_objects",
-    value: function merge_objects(obj, data, new_obj) {
-      if (new_obj === void 0) {
-        new_obj = {};
-      }
-
+    value: function merge_objects(obj, data) {
+      var new_obj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
       // The only way to get Vue to update all stuff
       // reactively is to create a brand new object.
       // TODO: Is there a simpler approach?
@@ -13124,11 +13121,8 @@ var DCCore = /*#__PURE__*/function (_DCEvents) {
 
   }, {
     key: "fast_merge",
-    value: function fast_merge(data, point, main) {
-      if (main === void 0) {
-        main = true;
-      }
-
+    value: function fast_merge(data, point) {
+      var main = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
       if (!data) return;
       var last_t = (data[data.length - 1] || [])[0];
       var upd_t = point[0];
@@ -13186,10 +13180,8 @@ var DCCore = /*#__PURE__*/function (_DCEvents) {
 
 
 var AggTool = /*#__PURE__*/function () {
-  function AggTool(dc, _int) {
-    if (_int === void 0) {
-      _int = 100;
-    }
+  function AggTool(dc) {
+    var _int = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
 
     classCallCheck_classCallCheck(this, AggTool);
 
@@ -13347,16 +13339,11 @@ var DataCube = /*#__PURE__*/function (_DCCore) {
 
   var _super = datacube_createSuper(DataCube);
 
-  function DataCube(data, sett) {
+  function DataCube() {
     var _this;
 
-    if (data === void 0) {
-      data = {};
-    }
-
-    if (sett === void 0) {
-      sett = {};
-    }
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var sett = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     classCallCheck_classCallCheck(this, DataCube);
 
@@ -13695,7 +13682,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(645);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Anit-boostrap tactix */\n.trading-vue *, ::after, ::before {\n    box-sizing: content-box;\n}\n.trading-vue img {\n    vertical-align: initial;\n}\n", ""]);
+exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Anit-boostrap tactix */\n.trading-vue *, ::after, ::before {\n    box-sizing: content-box;\n}\n.trading-vue img {\n    vertical-align: initial;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -13751,7 +13738,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(645);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n.trading-vue-legend {\n    position: relative;\n    z-index: 100;\n    font-size: 1.25em;\n    margin-left: 10px;\n    pointer-events: none;\n    text-align: left;\n    user-select: none;\n    font-weight: 300;\n}\n@media (min-resolution: 2x) {\n.trading-vue-legend {\n        font-weight: 400;\n}\n}\n.trading-vue-ohlcv {\n    pointer-events: none;\n    margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n    font-variant-numeric: tabular-nums;\n    font-size: 0.95em;\n    color: #999999; /* TODO: move => params */\n    margin-left: 0.1em;\n    margin-right: 0.2em;\n}\n.t-vue-title {\n    margin-right: 0.25em;\n    font-size: 1.45em;\n}\n.t-vue-ind {\n    margin-left: 0.2em;\n    margin-bottom: 0.5em;\n    font-size: 1.0em;\n    margin-top: 0.3em;\n}\n.t-vue-ivalue {\n    margin-left: 0.5em;\n}\n.t-vue-unknown {\n    color: #999999; /* TODO: move => params */\n}\n.tvjs-appear-enter-active,\n.tvjs-appear-leave-active\n{\n    transition: all .25s ease;\n}\n.tvjs-appear-enter, .tvjs-appear-leave-to\n{\n    opacity: 0;\n}\n", ""]);
+exports.push([module.id, "\n.trading-vue-legend {\n  position: relative;\n  z-index: 100;\n  font-size: 1.25em;\n  margin-left: 10px;\n  pointer-events: none;\n  text-align: left;\n  user-select: none;\n  font-weight: 300;\n}\n@media (min-resolution: 2x) {\n.trading-vue-legend {\n    font-weight: 400;\n}\n}\n.trading-vue-ohlcv {\n  pointer-events: none;\n  margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n  font-variant-numeric: tabular-nums;\n  font-size: 0.95em;\n  color: #999999; /* TODO: move => params */\n  margin-left: 0.1em;\n  margin-right: 0.2em;\n}\n.t-vue-title {\n  margin-right: 0.25em;\n  font-size: 1.45em;\n}\n.t-vue-ind {\n  margin-left: 0.2em;\n  margin-bottom: 0.5em;\n  font-size: 1em;\n  margin-top: 0.3em;\n}\n.t-vue-ivalue {\n  margin-left: 0.5em;\n}\n.t-vue-unknown {\n  color: #999999; /* TODO: move => params */\n}\n.tvjs-appear-enter-active,\n.tvjs-appear-leave-active {\n  transition: all 0.25s ease;\n}\n.tvjs-appear-enter,\n.tvjs-appear-leave-to {\n  opacity: 0;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -13779,7 +13766,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(645);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.id, "\n.trading-vue-section {\n    height: 0;\n    position: absolute;\n}\n", ""]);
+exports.push([module.id, "\n.trading-vue-section {\n  height: 0;\n  position: absolute;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
