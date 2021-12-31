@@ -1,4 +1,3 @@
-/* eslint-disable vue/require-prop-types */
 <script>
 // Sets up all layers/overlays for the grid with 'grid_id'
 
