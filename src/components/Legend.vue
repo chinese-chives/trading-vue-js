@@ -8,7 +8,8 @@
       <span class="t-vue-title" :style="{ color: common.colors.title }">
         {{ common.title_txt }}
       </span>
-      <span v-if="show_values">        
+      <span v-if="show_values">
+        <links />
         <span class="t-vue-lspan">{{ at[2] }}%; </span>
         <span class="t-vue-lspan">收/开 {{ ohlcv[3] }}/ {{ ohlcv[0] }}; </span>
         <span class="t-vue-lspan">高/低 {{ ohlcv[1] }} / {{ ohlcv[2] }}, {{ incOf(ohlcv[1], ohlcv[2]) }}% ;</span>
@@ -58,10 +59,11 @@
 <script>
 import ButtonGroup from "./ButtonGroup.vue";
 import Spinner from "./Spinner.vue";
+import Links from './Links.vue'
 
 export default {
   name: "ChartLegend",
-  components: { ButtonGroup, Spinner },
+  components: { ButtonGroup, Spinner, Links },
   props: ["common", "values", "grid_id", "meta_props"],
   computed: {
     ohlcv() {

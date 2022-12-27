@@ -1,7 +1,6 @@
 <template>
   <span style="z-index: 100000">
     <span v-for="(link, idx) in links" :key="idx">
-<!--      {{ link[1] }}-->
       <img :src="link[2]" class="t-vue-lbtn" :title="link[1]" :alt="link[1]" @click="open(link[0])" >
     </span>
   </span>
