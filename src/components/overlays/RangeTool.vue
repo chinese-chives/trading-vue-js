@@ -235,13 +235,19 @@ export default {
           turn = subRange.reduce((ret, candle) => ret + candle.raw[8], 0),
           preCandle1 = candle1.raw[4] / (candle1.raw[9] / 100 + 1),
           inc = candle2.raw[4] - preCandle1,
-          incp = candle2.raw[4] / preCandle1 - 1,
+          incp = inc / preCandle1,
+          inc2 = getMax(candle2) - preCandle1,
+          incp2 = inc2 / preCandle1,
           stamp1 = stamp2str(f(this.p1[0])),
           stamp2 = stamp2str(f(this.p2[0]));
       let amountShow = Math.round(amount / 1000000) / 100 + "亿",
           turnShow = Math.round(turn * 100) / 100 + "%",
           incShow = Math.round(inc * 100) / 100,
-          incpShow = Math.round(incp * 10000) / 100 + "%";
+          incpShow = Math.round(incp * 10000) / 100 + "%",
+          incShow2 = Math.round(inc2 * 100) / 100,
+          incpShow2 = Math.round(incp2 * 10000) / 100 + "%"
+      ;
+      // console.log(`candle2`, candle2)
 
       ctx.font = this.new_font;
       // Price delta (anf percent)
@@ -264,7 +270,7 @@ export default {
       let dtstr = this.t2str(dt) - -1;
       let text = [];
       if (this.price)
-        text.push(`${stamp1} _ ${stamp2} ${incShow}(${incpShow})`);
+        text.push(`${stamp1} _ ${stamp2} ${incShow}(${incpShow}) ${incShow2}(${incpShow2})`);
       if (this.time)
         text.push(`${b}/${dtstr}天; 换${turnShow}; 金${amountShow}`);
       text = text.join("\n");
@@ -331,5 +337,10 @@ function stamp2str(stamp) {
 }
 function p2(num) {
   return ("0" + num).slice(-2);
+}
+
+function getMax(candle) {
+  // console.log('candle2', candle.raw.slice(1, 5))
+  return Math.max.apply(null, candle.raw.slice(1, 5))
 }
 </script>
